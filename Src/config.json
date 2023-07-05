@@ -1,0 +1,17 @@
+{
+    "botSettings": {
+
+        "main": {
+            "token": "",
+            "status": "",
+            "prefix": ".",
+            "voice": ""
+
+        }
+
+    },
+
+    "API": {
+        "mongokey": ""
+    }
+}
