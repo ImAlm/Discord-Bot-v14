@@ -22,9 +22,18 @@ class Handler {
         client.login(botSettings.main.token).then( async (x) => {
             console.log(`[ + ] - Supervisor aktifliğini sağladı.`)
 
+        }).catch(err => {
+            return console.log(`[ - ] - Supervisor başlatılırken bir hata ile karşılaşıldı.`)
+        })
+
+        client.on('ready', async () => {
+
+            // Durum Ayarlama
             client.user.setActivity(`${botSettings.main.status}`, { type: ActivityType.Listening })
 
+            // Ses Kanalına Bağlanma
             const VoiceChannel = client.channels.cache.get(botSettings.main.voice);
+            if (!VoiceChannel) return console.log("[ ERROR ] - Bot ses kanalı ayarlanmamış.")
     
             await joinVoiceChannel({
                 channelId: VoiceChannel.id,
@@ -33,12 +42,7 @@ class Handler {
                 selfDeaf: true,
                 group: client.user.id
             });
-
-        }).catch(err => {
-            return console.log(`[ - ] - Supervisor başlatılırken bir hata ile karşılaşıldı.`)
         })
-
-
     }
 
     async defEvents() {
@@ -73,6 +77,8 @@ class Handler {
     async Start() {
 
         await this.Login()
+        await this.defEvents()
+        await this.defCommands()
         return;
     }
 }
